@@ -49,7 +49,7 @@ var critics =  map[string]map[string]float64{
 					"You, Me and Dupree" : 1.0,
 					"Superman Returns" : 4.0},
 				"Rabee" : {
-					"Snakes on a Plane" : 2.5,
+					"Snakes on a Plane" : 4.4,
 					"You, Me and Dupree" : 1.0,
 					"Superman Returns" : 4.0},
 				}
@@ -84,7 +84,7 @@ func Euclidean(user1 string, user2 string, critics map[string]map[string]float64
 		numerator = numerator + math.Pow(user1Ratings[movieName] - user2Ratings[movieName], 2)
 	}
 
-	// square root the numenator and divide one by it to get a higher ranking for similarity
+	// square root the numenator and divide one by it to get a higher ranking for similarity between 0-1
 	result := 1 / (1+(math.Sqrt(numerator)))
 
 	fmt.Println(result)

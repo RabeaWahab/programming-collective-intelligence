@@ -47,10 +47,15 @@ var critics =  map[string]map[string]float64{
 				"Toby" : map[string]float64{
 					"Snakes on a Plane" : 4.5,
 					"You, Me and Dupree" : 1.0,
-					"Superman Returns" : 4.0}}
+					"Superman Returns" : 4.0},
+				"Rabee" : {
+					"Snakes on a Plane" : 2.5,
+					"You, Me and Dupree" : 1.0,
+					"Superman Returns" : 4.0},
+				}
 
 func main() {
-	Euclidean("Toby", "Jack Matthews", critics)
+	Euclidean("Toby", "Rabee", critics)
 }
 
 // Euclidean Distance Score, to calculate the similarity between two users
@@ -80,7 +85,7 @@ func Euclidean(user1 string, user2 string, critics map[string]map[string]float64
 	}
 
 	// square root the numenator and divide one by it to get a higher ranking for similarity
-	result := 1 / 1+(math.Sqrt(numerator))
+	result := 1 / (1+(math.Sqrt(numerator)))
 
 	fmt.Println(result)
 

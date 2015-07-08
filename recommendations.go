@@ -48,15 +48,15 @@ var critics =  map[string]map[string]float64{
 					"Snakes on a Plane" : 4.5,
 					"You, Me and Dupree" : 1.0,
 					"Superman Returns" : 4.0},
-				"Rabee" : {
+				"Rabee" : map[string]float64{
 					"Snakes on a Plane" : 4.49,
 					"You, Me and Dupree" : 0.8,
-					"Superman Returns" : 4.0},
-				}
+					"Superman Returns" : 4.0}}
 
 func main() {
 	Euclidean("Toby", "Rabee", critics)
 	Pearson("Toby", "Rabee", critics)
+	Similarity("Rabee", "pearson", 2, critics)
 }
 
 // Euclidean Distance Score, to calculate the similarity between two users
@@ -145,4 +145,26 @@ func Pearson(user1 string, user2 string, critics map[string]map[string]float64) 
 	fmt.Println(result)
 
 	return result
+}
+
+func Similarity(user string, method string, heighestSimilaritiesLimit int, critics map[string]map[string]float64) map[string]float64 {
+	var results = make(map[string]float64)
+	var similarity float64 = 0
+
+	for critic, _ := range critics {
+		if critic != user {
+			if method == "pearson" {
+				similarity = Pearson(critic, user, critics)
+			}
+
+			if method == "euclidean" {
+				similarity = Euclidean(critic, user, critics)
+			}
+
+			results[critic] = similarity
+		}
+	}
+
+	fmt.Println(results);
+	return results
 }

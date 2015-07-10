@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"sort"
 )
 
 var critics =  map[string]map[string]float64{
@@ -21,8 +22,8 @@ var critics =  map[string]map[string]float64{
 					"You, Me and Dupree" : 3.0,
 					"The Night Listener" :  3.5},
 				"Michael Phillips" : map[string]float64{
-					"Lady in the Water" : 2.5,
-					"Snakes on a Plane" : 3.0,
+					"Lady in the Water" : 1.5,
+					"Snakes on a Plane" : 1.0,
 					"Superman Returns" : 3.5,
 					"The Night Listener" :  4.0},
 				"Claudia Puig" : map[string]float64{
@@ -147,8 +148,8 @@ func Pearson(user1 string, user2 string, critics map[string]map[string]float64) 
 	return result
 }
 
-func Similarity(user string, method string, heighestSimilaritiesLimit int, critics map[string]map[string]float64) map[string]float64 {
-	var results = make(map[string]float64)
+func Similarity(user string, method string, heighestSimilaritiesLimit int, critics map[string]map[string]float64) map[float64]string {
+	var results = make(map[float64]string)
 	var similarity float64 = 0
 
 	for critic, _ := range critics {
@@ -161,10 +162,25 @@ func Similarity(user string, method string, heighestSimilaritiesLimit int, criti
 				similarity = Euclidean(critic, user, critics)
 			}
 
-			results[critic] = similarity
+			results[similarity] = critic
 		}
 	}
 
-	fmt.Println(results);
-	return results
+	var floats = make([]float64, len(results))
+	for rating, _ := range results {
+		floats = append(floats, rating)
+	}
+	// sorting floats
+	sort.Float64s(floats)
+	fmt.Println(floats)
+	var newResultsMap = make(map[float64]string)
+
+	var criticName string
+	for _, onefloat := range floats {
+		fmt.Println(onefloat, criticName)
+		criticName = results[onefloat]
+		newResultsMap[onefloat] = criticName
+	}
+
+	return newResultsMap
 }
